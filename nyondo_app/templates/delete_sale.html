@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="mb-3 text-danger">Delete Sale</h2>
+
+<div class="card p-4">
+
+    <p>Are you sure you want to delete this sale?</p>
+
+    <ul class="list-group mb-3">
+        <li class="list-group-item">
+            <strong>Customer:</strong> {{ sale.customer_name }}
+        </li>
+        <li class="list-group-item">
+            <strong>Product:</strong> {{ sale.product.product_name }}
+        </li>
+        <li class="list-group-item">
+            <strong>Quantity:</strong> {{ sale.quantity }}
+        </li>
+        <li class="list-group-item">
+            <strong>Total:</strong> {{ sale.total_price }}
+        </li>
+    </ul>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <button class="btn btn-danger">
+            Yes, Delete
+        </button>
+
+        <a href="{% url 'sales_list' %}" class="btn btn-secondary">
+            Cancel
+        </a>
+    </form>
+
+</div>
+
+{% endblock %}
+
+

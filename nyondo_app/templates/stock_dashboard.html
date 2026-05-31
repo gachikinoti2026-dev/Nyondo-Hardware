@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="mb-4 fw-semibold">Stock Dashboard</h2>
+
+<!-- ================= METRICS ================= -->
+<div class="row g-4">
+
+    <div class="col-md-3">
+        <div class="stat-card primary">
+            <h6>Total Stock Records</h6>
+            <h3>{{ total_items }}</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="stat-card success">
+            <h6>Total Quantity Available</h6>
+            <h3>{{ total_quantity }}</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="stat-card dark">
+            <h6>Stock Value</h6>
+            <h3>{{ total_value|floatformat:2 }}</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="stat-card warning">
+            <h6>Supplier Debt (Unpaid)</h6>
+            <h3>{{ total_debt|floatformat:2 }}</h3>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================= SECOND ROW ================= -->
+<div class="row g-4 mt-1">
+
+    <div class="col-md-3">
+        <div class="stat-card success">
+            <h6>Paid Stock Value</h6>
+            <h3>{{ paid_value|floatformat:2 }}</h3>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================= LOW STOCK ================= -->
+<div class="card mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5 class="mb-0">Low Stock Products</h5>
+    </div>
+
+    <table class="table table-hover mt-3">
+
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Available</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for p in low_stock %}
+        <tr>
+            <td>{{ p.product_name }}</td>
+
+            <td>
+                <span class="badge bg-danger">
+                    {{ p.total_stock }}
+                </span>
+            </td>
+
+            <td>
+                <span class="badge bg-danger">
+                    Low Stock
+                </span>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3" class="text-center text-muted">
+                No low stock items
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+
+<!-- ================= QUICK ACTIONS ================= -->
+<div class="card mt-4">
+
+    <h5>Quick Actions</h5>
+
+    <div class="d-flex gap-2 mt-3">
+        <a href="{% url 'add_stock' %}" class="btn btn-primary btn-sm">
+            Add Stock
+        </a>
+
+        <a href="{% url 'stock_list' %}" class="btn btn-dark btn-sm">
+            View Stock
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}
+

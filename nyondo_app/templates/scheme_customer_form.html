@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="mb-3">Add Scheme Customer</h2>
+
+<div class="card p-4">
+
+<!-- Show messages -->
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <!-- Full Name -->
+    <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        <input name="full_name"
+               class="form-control"
+               required>
+        <small class="text-muted d-block mt-1">
+            Enter the customer's full legal name.
+        </small>
+    </div>
+
+    <!-- NIN -->
+    <div class="mb-3">
+        <label class="form-label">NIN</label>
+        <input name="nin_number"
+               class="form-control"
+               required
+               pattern="[A-Z]{2}[0-9A-Z]{10,12}"
+               title="Format: CFXXXXXXXXXX">
+        <small class="text-muted d-block mt-1">
+            Must be a valid Ugandan NIN (e.g. CF1234567890).
+        </small>
+    </div>
+
+    <!-- Phone -->
+    <div class="mb-3">
+        <label class="form-label">Phone Number</label>
+        <input name="phone_number"
+               class="form-control"
+               required
+               pattern="(\+256|0)7[0-9]{8}"
+               title="Format: 070XXXXXXX or +2567XXXXXXX">
+        <small class="text-muted d-block mt-1">
+            Format: 070XXXXXXX or +2567XXXXXXX.
+        </small>
+    </div>
+
+    <!-- Address -->
+    <div class="mb-3">
+        <label class="form-label">Address</label>
+        <input name="address" class="form-control">
+    </div>
+
+    <!-- Occupation -->
+    <div class="mb-3">
+        <label class="form-label">Occupation</label>
+        <input name="occupation" class="form-control">
+    </div>
+
+    <!-- Employer -->
+    <div class="mb-3">
+        <label class="form-label">Employer Name</label>
+        <input name="employer_name" class="form-control">
+    </div>
+
+    <!-- Buttons -->
+    <button class="btn btn-success">Add Customer</button>
+    <a href="{% url 'scheme_list' %}" class="btn btn-secondary">Cancel</a>
+
+</form>
+
+</div>
+
+{% endblock %}
+

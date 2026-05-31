@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="mb-3">Add Product</h2>
+
+<div class="card p-4">
+
+<form method="POST">
+   {% csrf_token %}
+
+   <!-- Product Name -->
+   <div class="mb-3">
+       <label class="form-label">Product Name</label>
+       <input name="product_name"
+              class="form-control"
+              placeholder="Enter product name"
+              required>
+       <small class="text-muted d-block mt-1">
+           Enter a clear and unique product name.
+       </small>
+   </div>
+
+   <!-- Category -->
+   <div class="mb-3">
+       <label class="form-label">Category</label>
+       <select name="category_name" class="form-control" required>
+           <option value="">-- Select Category --</option>
+           <option value="cement">Cement</option>
+           <option value="iron_bar">Iron Bar</option>
+           <option value="iron_sheets">Iron Sheets</option>
+           <option value="nails">Nails</option>
+           <option value="paint">Paint</option>
+       </select>
+       <small class="text-muted d-block mt-1">
+           Used to organize products in the system.
+       </small>
+   </div>
+
+   <!-- Unit Cost -->
+   <div class="mb-3">
+       <label class="form-label">Unit Cost</label>
+       <input name="unit_cost"
+              type="number"
+              step="0.01"
+              class="form-control"
+              placeholder="Enter cost price"
+              required>
+       <small class="text-muted d-block mt-1">
+           Initial cost. This will be updated automatically when new stock is received.
+       </small>
+   </div>
+
+   <!-- Selling Price -->
+   <div class="mb-3">
+       <label class="form-label">Selling Price</label>
+       <input name="unit_price"
+              type="number"
+              step="0.01"
+              class="form-control"
+              placeholder="Enter selling price"
+              required>
+       <small class="text-muted d-block mt-1">
+           Initial selling price. This may change based on the latest stock received.
+       </small>
+   </div>
+
+   <!-- Description -->
+   <div class="mb-3">
+       <label class="form-label">Description</label>
+       <textarea name="description"
+                 class="form-control"
+                 rows="3"
+                 placeholder="Optional"></textarea>
+       <small class="text-muted d-block mt-1">
+           Optional: add extra details about the product.
+       </small>
+   </div>
+
+   <!-- Buttons -->
+   <button class="btn btn-success">Save Product</button>
+   <a href="{% url 'product_list' %}" class="btn btn-secondary">Cancel</a>
+
+</form>
+
+</div>
+
+{% endblock %}
+

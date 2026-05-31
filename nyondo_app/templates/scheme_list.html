@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="mb-4">Scheme Management</h2>
+
+<!-- ACTION LINKS -->
+<div class="mb-4">
+    <a href="{% url 'add_scheme_customer' %}" class="btn btn-primary btn-sm">
+        Add Customer
+    </a>
+
+    <a href="{% url 'add_scheme_payment' %}" class="btn btn-success btn-sm">
+        Add Payment
+    </a>
+
+    <a href="{% url 'add_scheme_pickup' %}" class="btn btn-dark btn-sm">
+        Pickup Goods
+    </a>
+</div>
+
+<!-- ===================== CUSTOMERS ===================== -->
+<div class="card p-3 mb-4">
+    <h5>Customers</h5>
+
+    <table class="table table-hover table-bordered mt-3">
+        <thead class="table-light">
+            <tr>
+                <th>Name</th>
+                <th>NIN</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Balance</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for c in customers %}
+            <tr>
+                <td>{{ c.full_name }}</td>
+                <td>{{ c.nin_number }}</td>
+                <td>{{ c.phone_number }}</td>
+                <td>{{ c.address }}</td>
+                <td>{{ c.available_balance|floatformat:2 }}</td>
+                <td>
+                    <a href="{% url 'delete_scheme_customer' c.id %}" class="btn btn-danger btn-sm">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center text-muted">
+                    No customers found
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- ===================== PAYMENTS ===================== -->
+<div class="card p-3 mb-4">
+    <h5>Payments</h5>
+
+    <table class="table table-hover table-bordered mt-3">
+        <thead class="table-light">
+            <tr>
+                <th>Customer</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for p in payments %}
+            <tr>
+                <td>{{ p.customer.full_name }}</td>
+                <td>{{ p.amount_paid|floatformat:2 }}</td>
+                <td>{{ p.payment_date|date:"Y-m-d" }}</td>
+                <td>
+                    <a href="{% url 'scheme_payment_receipt' p.id %}" class="btn btn-info btn-sm">
+                        Receipt
+                    </a>
+
+                    <a href="{% url 'delete_scheme_payment' p.id %}" class="btn btn-danger btn-sm">
+                        Delete
+                    </a>
+                </td>
+
+
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center text-muted">
+                    No payments recorded
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- ===================== GOODS PICKUP ===================== -->
+<div class="card p-3 mb-4">
+    <h5>Goods Pickups</h5>
+
+    <table class="table table-hover table-bordered mt-3">
+        <thead class="table-light">
+            <tr>
+                <th>Customer</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for g in pickups %}
+            <tr>
+                <td>{{ g.customer.full_name }}</td>
+                <td>{{ g.product.product_name }}</td>
+                <td>{{ g.quantity_taken }}</td>
+                <td>{{ g.pickup_date|date:"Y-m-d" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center text-muted">
+                    No pickups recorded
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Delete Customer?</h3>
+
+<form method="POST">
+   {% csrf_token %}
+   <button class="btn btn-danger">Delete</button>
+   <a href="/scheme/" class="btn btn-secondary">Cancel</a>
+</form>
+
+{% endblock %}

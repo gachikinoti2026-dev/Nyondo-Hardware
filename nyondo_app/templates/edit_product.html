@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="mb-3">Edit Product</h2>
+
+<div class="card p-4">
+
+<form method="POST">
+   {% csrf_token %}
+
+   <!-- Product Name -->
+   <div class="mb-3">
+       <label class="form-label">Product Name</label>
+       <input name="product_name"
+              value="{{ product.product_name }}"
+              class="form-control"
+              required>
+       <small class="text-muted d-block mt-1">
+           Update the product name if needed.
+       </small>
+   </div>
+
+   <!-- Category -->
+   <div class="mb-3">
+       <label class="form-label">Category</label>
+       <select name="category_name" class="form-control" required>
+
+           <option value="cement" {% if product.category_name == "cement" %}selected{% endif %}>Cement</option>
+           <option value="iron_bar" {% if product.category_name == "iron_bar" %}selected{% endif %}>Iron Bar</option>
+           <option value="iron_sheets" {% if product.category_name == "iron_sheets" %}selected{% endif %}>Iron Sheets</option>
+           <option value="nails" {% if product.category_name == "nails" %}selected{% endif %}>Nails</option>
+           <option value="paint" {% if product.category_name == "paint" %}selected{% endif %}>Paint</option>
+
+       </select>
+       <small class="text-muted d-block mt-1">
+           Category helps organize products.
+       </small>
+   </div>
+
+   <!-- Unit Cost -->
+   <div class="mb-3">
+       <label class="form-label">Unit Cost</label>
+       <input name="unit_cost"
+              type="number"
+              step="0.01"
+              value="{{ product.unit_cost }}"
+              class="form-control"
+              required>
+       <small class="text-muted d-block mt-1">
+           This may be updated automatically when new stock is received.
+       </small>
+   </div>
+
+   <!-- Selling Price -->
+   <div class="mb-3">
+       <label class="form-label">Selling Price</label>
+       <input name="unit_price"
+              type="number"
+              step="0.01"
+              value="{{ product.unit_price }}"
+              class="form-control"
+              required>
+       <small class="text-muted d-block mt-1">
+           This may change based on the latest stock received.
+       </small>
+   </div>
+
+   <!-- Description -->
+   <div class="mb-3">
+       <label class="form-label">Description</label>
+       <textarea name="description"
+                 class="form-control"
+                 rows="3">{{ product.description }}</textarea>
+       <small class="text-muted d-block mt-1">
+           Optional: update product details.
+       </small>
+   </div>
+
+   <!-- Buttons -->
+   <button class="btn btn-success">Update Product</button>
+   <a href="{% url 'product_list' %}" class="btn btn-secondary">Cancel</a>
+
+</form>
+
+</div>
+
+{% endblock %}
+

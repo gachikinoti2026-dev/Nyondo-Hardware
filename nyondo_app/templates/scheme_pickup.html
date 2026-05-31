@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="mb-3">Pickup Goods (Scheme)</h2>
+
+<div class="card p-4">
+
+<!-- Messages -->
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <!-- Customer -->
+    <div class="mb-3">
+        <label class="form-label">Customer</label>
+        <select name="customer" class="form-control" required>
+            <option value="">-- Select Customer --</option>
+            {% for c in customers %}
+                <option value="{{ c.id }}">
+                    {{ c.full_name }} (Balance: {{ c.available_balance|floatformat:2 }})
+                </option>
+            {% endfor %}
+        </select>
+        <small class="text-muted d-block mt-1">
+            Select the customer picking goods.
+        </small>
+    </div>
+
+    <!-- Product -->
+    <div class="mb-3">
+        <label class="form-label">Product</label>
+        <select name="product" class="form-control" required>
+            <option value="">-- Select Product --</option>
+            {% for p in products %}
+                <option value="{{ p.id }}">
+                    {{ p.product_name }} (Price: {{ p.unit_price|floatformat:2 }})
+                </option>
+            {% endfor %}
+        </select>
+        <small class="text-muted d-block mt-1">
+            Product price is taken from the system.
+        </small>
+    </div>
+
+    <!-- Quantity -->
+    <div class="mb-3">
+        <label class="form-label">Quantity</label>
+        <input name="quantity_taken"
+               type="number"
+               class="form-control"
+               placeholder="Enter quantity"
+               required>
+        <small class="text-muted d-block mt-1">
+            Quantity must be less than available stock.
+        </small>
+    </div>
+
+    <!-- Info -->
+    <div class="alert alert-info">
+        Total cost will be calculated automatically based on product price.
+    </div>
+
+    <!-- Buttons -->
+    <button class="btn btn-success">Confirm Pickup</button>
+    <a href="{% url 'scheme_list' %}" class="btn btn-secondary">Cancel</a>
+
+</form>
+
+</div>
+
+{% endblock %}
+

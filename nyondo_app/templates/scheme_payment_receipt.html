@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card p-4" style="max-width: 700px; margin: auto;">
+
+    <!-- HEADER -->
+    <div class="text-center mb-4">
+        <h3 class="fw-bold">Nyondo Hardware</h3>
+        <p class="text-muted mb-0">Payment Receipt</p>
+    </div>
+
+    <hr>
+
+    <!-- RECEIPT INFO -->
+    <div class="d-flex justify-content-between mb-3">
+        <div>
+            <strong>Receipt #:</strong> {{ payment.id }}<br>
+            <strong>Date:</strong> {{ payment.date_paid|date:"Y-m-d" }}
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- CUSTOMER DETAILS -->
+    <div class="mb-3">
+        <h5>Customer Details</h5>
+        <p class="mb-1"><strong>Name:</strong> {{ customer.full_name }}</p>
+        <p class="mb-1"><strong>Phone:</strong> {{ customer.phone_number }}</p>
+        <p class="mb-1"><strong>NIN:</strong> {{ customer.nin_number }}</p>
+    </div>
+
+    <hr>
+
+    <!-- PAYMENT DETAILS -->
+    <div class="mb-3">
+        <h5>Payment Details</h5>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>Amount Paid</th>
+                <td>{{ payment.amount_paid|floatformat:2 }}</td>
+            </tr>
+
+            <tr>
+                <th>Notes</th>
+                <td>{{ payment.notes|default:"-" }}</td>
+            </tr>
+
+            <tr>
+                <th>Remaining Balance</th>
+                <td><strong>{{ balance|floatformat:2 }}</strong></td>
+            </tr>
+        </table>
+    </div>
+
+    <hr>
+
+    <!-- FOOTER -->
+    <div class="text-center mt-4">
+        <p class="text-muted mb-1">Thank you for your payment!</p>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="d-flex justify-content-between mt-3">
+
+        <a href="{% url 'scheme_list' %}" class="btn btn-secondary">
+            Back
+        </a>
+
+        <button onclick="window.print()" class="btn btn-dark">
+            Print
+        </button>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

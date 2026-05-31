@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="mb-3">Sales</h2>
+
+<!-- Add Sale Button -->
+<a href="{% url 'add_sale' %}" class="btn btn-primary mb-3">
+    Add Sale
+</a>
+
+<div class="card p-3">
+
+<table class="table table-hover table-bordered align-middle">
+<thead>
+<tr>
+   <th>Customer</th>
+   <th>Product</th>
+   <th>Quantity</th>
+   <th>Total</th>
+   <th>Date</th>
+   <th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+{% for sale in sales %}
+<tr>
+   <td>{{ sale.customer_name }}</td>
+   <td>{{ sale.product.product_name }}</td>
+   <td>{{ sale.quantity }}</td>
+   <td>{{ sale.total_price|floatformat:2 }}</td>
+   <td>{{ sale.sale_date|date:"Y-m-d" }}</td>
+
+   <td>
+
+       <a href="{% url 'sales_invoice' sale.id %}" 
+          class="btn btn-info btn-sm">
+          Invoice
+       </a>
+
+       <a href="{% url 'edit_sale' sale.id %}" 
+          class="btn btn-warning btn-sm">
+          Edit
+       </a>
+
+       <a href="{% url 'delete_sale' sale.id %}" 
+          class="btn btn-danger btn-sm">
+          Delete
+       </a>
+
+   </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="6" class="text-center text-muted">
+        No sales recorded yet
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}
+

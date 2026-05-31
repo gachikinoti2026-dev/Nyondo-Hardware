@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card p-4">
+
+<h3>Invoice #{{ sale.id }}</h3>
+<p>Date: {{ sale.sale_date|date:"Y-m-d H:i" }}</p>
+<p>Customer: {{ sale.customer_name }}</p>
+
+<table class="table table-bordered mt-3">
+<tr>
+   <th>Product</th>
+   <th>Qty</th>
+   <th>Unit Price</th>
+   <th>Total</th>
+</tr>
+
+<tr>
+   <td>{{ sale.product.product_name }}</td>
+   <td>{{ sale.quantity }}</td>
+   <td>{{ sale.product.unit_price }}</td>
+   <td>{{ goods_total }}</td>
+</tr>
+</table>
+
+<p>Transport: {{ sale.transport_fee }}</p>
+<h4>Total: {{ sale.total_price }}</h4>
+
+<button onclick="window.print()" class="btn btn-primary">Print</button>
+
+</div>
+
+{% endblock %}

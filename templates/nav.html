@@ -1,0 +1,97 @@
+<nav id="nav_menu" class="d-flex align-items-center px-4">
+
+    <!-- Brand -->
+    <div class="fw-bold text-success">
+        Nyondo Hardware
+    </div>
+
+    <!-- Right Side -->
+    <div class="ms-auto d-flex align-items-center gap-3">
+
+        {% if user.is_authenticated %}
+
+        <!-- Quick Actions -->
+        <div class="dropdown">
+            <a class="nav-link dropdown-toggle text-light"
+               href="#"
+               data-bs-toggle="dropdown">
+                Quick Actions
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+
+                <li>
+                    <a class="dropdown-item" href="{% url 'product_create' %}">
+                        Add Product
+                    </a>
+                </li>
+
+                <li>
+                    <a class="dropdown-item" href="{% url 'add_stock' %}">
+                        Add Stock
+                    </a>
+                </li>
+
+                <li>
+                    <a class="dropdown-item" href="{% url 'add_sale' %}">
+                        Add Sale
+                    </a>
+                </li>
+
+                <li>
+                    <a class="dropdown-item" href="{% url 'add_scheme_customer' %}">
+                        Add Scheme Customer
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- User Menu -->
+        <div class="dropdown">
+            <a class="nav-link dropdown-toggle text-light"
+               href="#"
+               data-bs-toggle="dropdown">
+                {{ user.username }}
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+
+                <li>
+                    <a class="dropdown-item" href="{% url 'sales_dashboard' %}">
+                        Dashboard
+                    </a>
+                </li>
+
+                <li><hr class="dropdown-divider"></li>
+
+                <li>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="dropdown-item">
+                            Logout
+                        </button>
+                    </form>
+                </li>
+
+            </ul>
+        </div>
+
+        {% else %}
+
+        <a class="btn btn-outline-light btn-sm"
+           href="{% url 'login' %}">
+            Login
+        </a>
+
+        <a class="btn btn-success btn-sm"
+           href="{% url 'register' %}">
+            Register
+        </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+

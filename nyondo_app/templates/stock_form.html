@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="mb-3">Add Stock</h2>
+
+<div class="card p-4">
+
+<form method="POST">
+   {% csrf_token %}
+
+   <!-- Product -->
+   <div class="mb-3">
+       <label class="form-label">Product</label>
+       <select name="product" class="form-control" required>
+           <option value="">-- Select Product --</option>
+           {% for p in products %}
+               <option value="{{ p.id }}">{{ p.product_name }}</option>
+           {% endfor %}
+       </select>
+       <small class="text-muted d-block mt-1">
+           Select the product you are adding stock for.
+       </small>
+   </div>
+
+   <!-- Supplier -->
+   <div class="mb-3">
+       <label class="form-label">Supplier Name</label>
+       <input name="supplier_name"
+              class="form-control"
+              placeholder="Enter supplier name"
+              required>
+       <small class="text-muted d-block mt-1">
+           Who supplied this stock?
+       </small>
+   </div>
+
+   <!-- Quantity -->
+   <div class="mb-3">
+       <label class="form-label">Quantity Received</label>
+       <input name="quantity_received"
+              type="number"
+              class="form-control"
+              placeholder="Enter quantity"
+              required>
+       <small class="text-muted d-block mt-1">
+           Total number of items received.
+       </small>
+   </div>
+
+   <!-- Unit Cost -->
+   <div class="mb-3">
+       <label class="form-label">Unit Cost</label>
+       <input name="unit_cost"
+              type="number"
+              step="0.01"
+              class="form-control"
+              placeholder="Enter cost price"
+              required>
+       <small class="text-muted d-block mt-1">
+           This will update the product's cost price automatically.
+       </small>
+   </div>
+
+   <!-- Unit Price -->
+   <div class="mb-3">
+       <label class="form-label">Selling Price</label>
+       <input name="unit_price"
+              type="number"
+              step="0.01"
+              class="form-control"
+              placeholder="Enter selling price"
+              required>
+       <small class="text-muted d-block mt-1">
+           This will update the product's selling price based on this stock.
+       </small>
+   </div>
+
+   <!-- Supplier Paid -->
+   <div class="mb-3 form-check">
+       <input type="checkbox"
+              name="supplier_paid"
+              class="form-check-input"
+              id="supplierPaid">
+       <label class="form-check-label" for="supplierPaid">
+           Supplier Paid
+       </label>
+       <small class="text-muted d-block mt-1">
+           Check if payment has already been made to the supplier.
+       </small>
+   </div>
+
+   <!-- Buttons -->
+   <button class="btn btn-success">Save Stock</button>
+   <a href="{% url 'stock_list' %}" class="btn btn-secondary">Cancel</a>
+
+</form>
+
+</div>
+
+{% endblock %}
+

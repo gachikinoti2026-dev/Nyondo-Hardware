@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="mb-3">Stock</h2>
+
+<a href="{% url 'add_stock' %}" class="btn btn-primary mb-3">
+    Add Stock
+</a>
+
+<div class="card p-3">
+
+<table class="table table-hover table-bordered align-middle">
+
+<thead class="table-light">
+<tr>
+    <th>Product</th>
+    <th>Supplier</th>
+    <th>Received</th>
+    <th>Available</th>
+    <th>Unit Cost</th>
+    <th>Available Value</th>
+    <th>Amount</th>
+    <th>Status</th>
+    <th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+{% for s in stocks %}
+<tr>
+
+    <!-- Product -->
+    <td>
+        {{ s.product.product_name }}
+        <br>
+        <small class="text-muted">
+            {{ s.date_received|date:"Y-m-d" }}
+        </small>
+    </td>
+
+    <!-- Supplier -->
+    <td>{{ s.supplier_name }}</td>
+
+    <!-- Quantity Received -->
+    <td>{{ s.quantity_received }}</td>
+
+    <!-- Quantity Available -->
+    <td>
+        {% if s.quantity_available > 0 %}
+            <span class="badge bg-success">
+                {{ s.quantity_available }}
+            </span>
+        {% else %}
+            <span class="badge bg-danger">
+                0
+            </span>
+        {% endif %}
+    </td>
+
+    <!-- Unit Cost -->
+    <td>{{ s.unit_cost|floatformat:2 }}</td>
+
+    <!-- Available Value (IMPORTANT) -->
+    <td>
+        {{ s.available_value|floatformat:2 }}
+    </td>
+
+    <!-- Supplier Debt -->
+    <td>
+        {{ s.total_amount_due|floatformat:2 }}
+    </td>
+
+    <!-- Payment Status -->
+    <td>
+        {% if s.supplier_paid %}
+            <span class="badge bg-success">Paid</span>
+        {% else %}
+            <span class="badge bg-warning text-dark">Pending</span>
+        {% endif %}
+    </td>
+
+    <!-- Actions -->
+    <td>
+        <a href="{% url 'edit_stock' s.id %}" 
+           class="btn btn-warning btn-sm">
+           Edit
+        </a>
+
+        <a href="{% url 'delete_stock' s.id %}" 
+           class="btn btn-danger btn-sm">
+           Delete
+        </a>
+    </td>
+
+</tr>
+{% empty %}
+<tr>
+    <td colspan="9" class="text-center text-muted">
+        No stock records available
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="mb-3">Edit Sale</h2>
+
+<div class="card p-4">
+
+<form method="POST">
+    {% csrf_token %}
+
+    <!-- Customer -->
+    <div class="mb-3">
+        <label class="form-label">Customer Name</label>
+        <input name="customer_name"
+               value="{{ sale.customer_name }}"
+               class="form-control"
+               required>
+    </div>
+
+    <!-- Customer Type -->
+    <div class="mb-3">
+        <label class="form-label">Customer Type</label>
+        <select name="customer_type" class="form-control">
+            <option value="retail" {% if sale.customer_type == "retail" %}selected{% endif %}>
+                Retail
+            </option>
+            <option value="wholesale" {% if sale.customer_type == "wholesale" %}selected{% endif %}>
+                Wholesale
+            </option>
+        </select>
+    </div>
+
+    <!-- Product -->
+    <div class="mb-3">
+        <label class="form-label">Product</label>
+        <select name="product" class="form-control">
+            {% for p in products %}
+                <option value="{{ p.id }}"
+                    {% if sale.product.id == p.id %}selected{% endif %}>
+                    {{ p.product_name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Unit Price (from selected product) -->
+    <div class="mb-3">
+        <label class="form-label">Unit Price</label>
+        <input class="form-control"
+               value="{{ sale.product.unit_price }}"
+               readonly>
+    </div>
+
+    <!-- Quantity -->
+    <div class="mb-3">
+        <label class="form-label">Quantity</label>
+        <input name="quantity"
+               value="{{ sale.quantity }}"
+               class="form-control"
+               required>
+    </div>
+
+    <!-- Transport -->
+    <div class="mb-3 form-check">
+        <input type="checkbox"
+               name="transport_required"
+               class="form-check-input"
+               {% if sale.transport_required %}checked{% endif %}>
+        <label class="form-check-label">Transport Required</label>
+    </div>
+
+    <!-- Distance -->
+    <div class="mb-3">
+        <label class="form-label">Distance (km)</label>
+        <input name="distance_km"
+               value="{{ sale.distance_km }}"
+               class="form-control">
+    </div>
+
+    <!-- Buttons -->
+    <button class="btn btn-success">Update Sale</button>
+    <a href="{% url 'sales_list' %}" class="btn btn-secondary">Cancel</a>
+
+</form>
+
+</div>
+
+{% endblock %}
+
+
