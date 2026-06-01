@@ -11,6 +11,7 @@ class Product(models.Model):
         ("cement", "Cement"),
         ("iron_bar", "Iron Bar"),
         ("iron_sheets", "Iron Sheets"),
+        ("barbed_wires", "Barbed wires"),
         ("others", "Others"),
         ("nails", "Nails"),
         ("paint", "Paint"),
