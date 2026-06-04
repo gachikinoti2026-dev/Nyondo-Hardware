@@ -27,6 +27,9 @@
             <option value="wholesale" {% if sale.customer_type == "wholesale" %}selected{% endif %}>
                 Wholesale
             </option>
+            <option value="individual_buyers" {% if sale.customer_type == "individual_buyers" %}selected{% endif %}>
+                Individual Buyers
+            </option>
         </select>
     </div>
 

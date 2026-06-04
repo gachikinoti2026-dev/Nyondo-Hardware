@@ -99,6 +99,7 @@ class Sales(models.Model):
     CUSTOMER_TYPES = [
         ("retail", "Retail"),
         ("wholesale", "Wholesale"),
+        ("individual_buyers", "Individual Buyers"),
     ]
 
     customer_name = models.CharField(max_length=150)
